@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Details</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/global.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/gallery.css}"/>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body style=" position: relative; margin: 0; padding-bottom: 6rem; min-height: 100%;">
+<nav th:replace="fragments/header :: header"></nav>
+
+<div class="container header-margin bootstrap snippet">
+
+    <div class="row" style="margin-bottom: 50px;">
+        <h1 th:text="#{imageView}"></h1>
+    </div>
+
+
+    <div class="row">
+
+        <!-- image -->
+        <div class="col-sm-9" th:with="bundleName=${user.getBundleName()}">
+            <div class="row">
+                <img class="card-img" th:src="@{'/image/' + ${user.id} + '/' + ${image.filename}}" alt="">
+            </div>
+            <br>
+            <div class="row">
+                <h2 class="details" th:text="#{filters}"></h2>
+            </div>
+            <br>
+
+            <!-- classic bundle -->
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="row text-center">
+                        <img class="card-img" style="filter: sepia(50%);"
+                             th:src="@{'/image/' + ${user.id} + '/' + ${image.filename}}" alt="">
+                    </div>
+                    <div class="row text-center marge">
+                        <a class="btn btn-info" role="button" th:href="@{'/filter/' + ${image.id} + '/sepia'}" th:text="#{sepia}"></a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="row text-center">
+                        <img class="card-img" style="filter: grayscale(100%);"
+                             th:src="@{'/image/' + ${user.id} + '/' + ${image.filename}}" alt="">
+                    </div>
+                    <div class="row text-center marge">
+                        <a class="btn btn-info btn-move-forward" role="button" th:href="@{'/filter/' + ${image.id} + '/grayscale'}" th:text="#{grayscale}" ></a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="row text-center">
+                        <img class="card-img" style="filter: blur(1px);"
+                             th:src="@{'/image/' + ${user.id} + '/' + ${image.filename}}" alt="">
+                    </div>
+                    <div class="row text-center marge">
+                        <a class="btn btn-info btn-move-forward" role="button" th:href="@{'/filter/' + ${image.id} + '/blur'}" th:text="#{blur}" ></a>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <!-- gold bundle -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="row text-center">
+                        <img class="card-img" style="filter: invert(100%);"
+                             th:src="@{'/image/' + ${user.id} + '/' + ${image.filename}}" alt="">
+                    </div>
+                    <div class="row text-center marge">
+                        <a class="btn btn-info" role="button" th:disabled="${bundleName} == 'classic' ? true : false"
+                           th:href="${bundleName} == 'classic' ? '' : @{'/filter/' + ${image.id} + '/invert'}" th:text="#{invert}"></a>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row text-center">
+                        <h3 th:text="#{unavailable}"></h3>
+                    </div>
+                    <div class="row text-center marge">
+                        <a class="btn btn-info" role="button" th:disabled="${bundleName} == 'classic' ? true : false"
+                           th:href="${bundleName} == 'classic' ? '' : @{'/filter/' + ${image.id} + '/pixelize'}" th:text="#{pixelize}"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- form -->
+        <div class="col-sm-3">
+            <form class="form" action="#" th:action="@{/edit}" th:object="${image}" method="post">
+
+                <input type="hidden" class="form-control" th:field="*{id}">
+
+                <div class="form-group">
+                    <label for="title"><h4 th:text="#{title}"></h4></label>
+                    <label th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+                           class="validation-message"></label>
+                    <input type="text" class="form-control" th:field="*{title}"
+                           id="title" title="enter the title of the pic">
+                </div>
+
+                <div class="form-group">
+                    <label for="description"><h4>Description</h4></label>
+                    <label th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+                           class="validation-message"></label>
+                    <input type="text" class="form-control" th:field="*{description}"
+                           id="description" title="enter the description of the pic">
+                </div>
+
+                <div class="form-group">
+                    <label th:for="isPublic"><h4 th:text="#{public}"></h4></label>
+                    <input type="checkbox" class="regular-checkbox" name="isPublic" th:field="*{isPublic}">
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12 text-center">
+                        <br>
+                        <button class="btn btn-lg btn-success" type="submit"><i
+                                class="glyphicon glyphicon-ok-sign"></i><span th:text="#{save}"></span></button>
+                        <span th:utext="${successMessage}"></span>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+</div>
+
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

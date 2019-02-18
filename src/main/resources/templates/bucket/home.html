@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/global.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bucket.css}"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body style=" position: relative; margin: 0; padding-bottom: 6rem; min-height: 100%;">
+
+<nav th:replace="fragments/header :: header"></nav>
+
+<div class="container-fluid header-margin form-signin">
+
+    <div class="row">
+        <div id="plan">
+            <div class="title col-sm-3">
+                <h1 th:text="#{free}"></h1>
+                <p th:text="#{classic}"></p>
+
+            </div>
+            <div class="containDetails col-sm-6">
+                <ul class="details">
+                    <li class="first">3 <span th:text="#{filters}"></span></li>
+                    <li>5<span th:text="#{files}"></span></li>
+                </ul>
+            </div>
+            <div class="end col-sm-3">
+                <div class="select">
+                    <a th:href="@{bucket/classic}" class="button button-flat-royal button-pill" th:text="#{selectBundle}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div id="plan">
+            <div class="title col-sm-3">
+                <h1>$50 / <span th:text="#{life}"></span></h1>
+                <p>Gold</p>
+            </div>
+            <div class="containDetails col-sm-6">
+                <ul class="details">
+                    <li class="first">5 <span th:text="#{filters}"></span></li>
+                    <li>20<span th:text="#{files}"></span></li>
+                </ul>
+            </div>
+            <div class="end col-sm-3">
+                <div class="select">
+                    <a th:href="@{bucket/gold}" class="button button-flat-royal button-pill" th:text="#{selectBundle}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div id="plan">
+            <div class="title col-sm-3">
+                <h1>$100 / <span th:text="#{life}"></span></h1>
+                <p>Platinum</p>
+
+            </div>
+            <div class="containDetails col-sm-6">
+                <ul class="details">
+                    <li class="first">Unlimited <span th:text="#{filters}"></span></li>
+                    <li>Unlimited<span>Files</span></li>
+                </ul>
+            </div>
+            <div class="end col-sm-3">
+                <div class="select">
+                    <a th:href="@{bucket/platinum}" class="button button-flat-royal button-pill" th:text="#{selectBundle}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

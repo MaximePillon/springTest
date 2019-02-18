@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/global.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav th:replace="fragments/header :: header"></nav>
+
+<div class="container header-margin bootstrap snippet">
+    <div class="row">
+        <div class="col-sm-10"><h1 th:text="${user.username}"></h1></div>
+    </div>
+
+    <div class="row">
+
+
+        <div class="col-sm-3"><!--left side-->
+
+
+            <div class="text-center">
+                <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail"
+                     alt="avatar">
+                <h6 th:text="#{unavailable}"></h6>
+                <input type="file" class="text-center center-block file-upload">
+            </div>
+            </hr><br>
+
+            <ul class="list-group">
+                <li class="list-group-item text-right"><span class="pull-left"><strong th:text="#{bundle}"></strong></span> <span th:text="${user.getBundleName()}"></span></li>
+                <li class="list-group-item text-right"><span class="pull-left" style="margin-right: 20px;"><strong th:text="#{upload}"></strong></span><span th:text="${user.imageCounter() + '/' + user.getBundleObject().numberOfFile()}"></span></li>
+
+                <li class="list-group-item text-right"><span class="pull-left"><strong th:text="#{likes}"></strong></span> TODO</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong th:text="#{posts}"></strong></span> TODO</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong th:text="#{followers}"></strong></span> TODO</li>
+            </ul>
+
+        </div><!--/col-3-->
+
+        <div class="col-sm-9">
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="home">
+                    <hr>
+                    <form class="form" action="#" th:action="@{/update}"
+                          th:object="${user}" method="post">
+
+                        <input type="hidden" class="form-control" th:field="*{id}">
+
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label for="first_name"><h4 th:text="#{firstname}"></h4></label>
+                                <label th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                                       class="validation-message"></label>
+                                <input type="text" class="form-control" th:field="*{firstName}"
+                                       id="first_name" placeholder="matt" title="enter your first name if any.">
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label for="last_name"><h4 th:text="#{lastname}"></h4></label>
+                                <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                                       class="validation-message"></label>
+                                <input type="text" class="form-control" th:field="*{lastName}"
+                                       id="last_name" placeholder="Bond" title="enter your last name if any.">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label for="email"><h4>Email</h4></label>
+                                <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                       class="validation-message"></label>
+                                <input type="email" class="form-control" th:field="*{email}" id="email"
+                                       placeholder="you@email.com" title="enter your email.">
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label for="location"><h4 th:text="#{location}"></h4></label>
+                                <label th:if="${#fields.hasErrors('city')}" th:errors="*{city}"
+                                       class="validation-message"></label>
+                                <input type="text" class="form-control" th:field="*{city}" id="location"
+                                       placeholder="Paris"
+                                       title="enter a city">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <br>
+                                <button class="btn btn-lg btn-success" type="submit"><i
+                                        class="glyphicon glyphicon-ok-sign"></i><span style="margin-left: 5px" th:text="#{save}"></span>
+                                </button>
+                                <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i><span style="margin-left: 5px" th:text="#{reset}"></span>
+                                </button>
+                                <span th:utext="${successMessage}"></span>
+                            </div>
+                        </div>
+                    </form>
+
+                    <hr>
+
+                </div><!--/tab-pane-->
+            </div><!--/tab-content-->
+        </div><!--/col-9-->
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

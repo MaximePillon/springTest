@@ -1,0 +1,39 @@
+Here is all the pattern I have implemented for my project and where You can find them
+
+1 - Abstract factory pattern
+    The whole system of shop and bundle of the project work under this pattern.
+    You can find it under the directory "/src/main/java/springproject/project/model/bundle".
+    With the actual Abstract being ABundle.java file.
+
+2 - Singleton pattern
+    The singleton pattern is used inside jobs run every hour and when creating image or user.
+    You can find the Singleton in "/src/main/java/springproject/project/service/Logger.java"
+    And used in "/src/main/java/springproject/project/Task/LoggingJob.java"
+
+3 - Iterator pattern
+    The iterator pattern is used through all the repository. It helped me when receiving response
+    from database query. You can see in "/src/main/java/springproject/project/repository/ImageRepository.java"
+    where the list where returned and they are used with the method next(), prev() and {foreach} every where in the code
+
+4 - FieldInjectionPattern
+    The field injection is used whenever I used the @Autowired annotation, you can see it clearly in the services and
+    controllers directory. I used to inject dependencies between highly correlated classes
+
+5 - Facade Pattern
+    The facade pattern is used in the restController under the annotation @TokenConstraint it helped me analyse headers
+    request to check if the request was authorized, which make the each controller simpler and easier to use.
+    The annotation is defined under "/src/main/java/springproject/project/validator/" directory.
+
+6 - Model View Controller pattern
+    The whole project is design under this pattern. I used to organize the whole project. The idea is the view send
+    the request to the controller who will call a service which will request the repository then do the way back to
+    the view
+
+7 - View helper pattern
+    This pattern come with the whole thymeleaf integration, it helped me to insert logic in the view, call method from
+    them, throws error for invalid field with custom message. You can see that pattern come to use on every "th:" in
+    the views
+
+8 - Repository design pattern
+    This pattern helped me to abstract the database and persisting logic from the business logic. It helped to separate
+    those 2 logic. You can find all the repository under "/src/main/java/springproject/project/repository/"

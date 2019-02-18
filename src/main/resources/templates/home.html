@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Epicture</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/global.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/gallery.css}"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<nav th:replace="fragments/header :: header"></nav>
+
+<div sec:authorize="isAnonymous()" class="container header-margin text-center">
+    <span class="home-text" th:text="#{greeting}"></span>
+    <br>
+    <span class="home-text" th:text="#{pleaseLog}"></span>
+</div>
+
+<div sec:authorize="isAuthenticated()" class="container header-margin">
+    <div class="row text-center">
+        <span class="home-text" th:text="#{greeting}"></span>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2 col-sm-offset-5">
+            <form th:action="@{search}">
+                <input  class="form-control" th:value="${filter}" type="text" name="filter">
+                <button type="submit" class="btn btn-primary btn-lg btn-block" th:text="search"></button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row tab-content" id="pills-tabContent">
+        <th:block th:each="img : ${images}">
+            <div class="Portfolio">
+                <img class="card-img" th:src="@{'/image/' + ${img.user.id} + '/' + ${img.filename}}" alt="">
+                <div class="desc">
+                    <p style="display: inline;" th:text="${img.title}"></p>
+                </div>
+
+            </div>
+        </th:block>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

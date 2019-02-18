@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  postgresql:
+    image: 'bitnami/postgresql:latest'
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRESQL_DATABASE=springproject
+      - POSTGRESQL_USERNAME=spring
+      - POSTGRESQL_PASSWORD=project
