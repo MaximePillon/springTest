@@ -2,6 +2,7 @@ package springproject.project.service;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 import springproject.project.model.Image;
 import springproject.project.repository.ImageRepository;
@@ -53,6 +54,14 @@ public class ImageService {
         return imageRepository.findAllByIsPublicAndDescriptionContaining(true, key);
     }
 
+    public List<Image> findByUserId(int id) {
+        return imageRepository.findByUserId(id);
+    }
+
+    public List<Image> findByDescription(String desc) {
+        return imageRepository.findByDescriptionContaining(desc);
+    }
+
     public void createImage(MultipartFile file, Image image) throws IOException {
         Logger logger = Logger.getInstance();
 
@@ -67,6 +76,20 @@ public class ImageService {
             imageRepository.save(image);
             logger.logCreate("image for user " + image.getUser().getUsername() + " of name " + image.getTitle());
         }
+    }
+
+    public void createImageFromRest(byte[] file, Image image, String filename) throws IOException {
+        Logger logger = Logger.getInstance();
+
+        File destFile = new File(IMAGE_PATH + image.getUser().getId() + '/' + filename);
+        destFile.getParentFile().mkdirs();
+        destFile.createNewFile();
+
+        Path destPath = destFile.toPath();
+        FileCopyUtils.copy(file, destFile);
+        image.setFilename(filename);
+        imageRepository.save(image);
+        logger.logCreate("image for user " + image.getUser().getUsername() + " of name " + image.getTitle());
     }
 
     public void delete(Image image) throws IOException {
@@ -85,6 +108,13 @@ public class ImageService {
 
     public Image findById(int id) {
         return imageRepository.findById(id);
+    }
+
+    public void removeImageById(int id) {
+        System.out.println("in delete method");
+        Image image = imageRepository.findById(id);
+        imageRepository.delete(image);
+        imageRepository.flush();
     }
 
     public void updateImage(Image actual, Image newDetails)

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -41,6 +42,10 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public List<User> findByPartialEmail(String email) {
+        return userRepository.findAllByEmailContaining(email);
+    }
+
     public void validate(User user) { userRepository.saveAndFlush(user); }
 
     public void saveUser(User user) {
@@ -68,6 +73,14 @@ public class UserService {
         user.setCity(newDetails.getCity());
 
         userRepository.saveAndFlush(user);
+    }
+
+    public List<String> findEmailWithPackage(String name) {
+        List<User> users = userRepository.findByBundle(name);
+        List<String> emails = new ArrayList<>();
+
+        for (User user : users) { emails.add(user.getEmail()); }
+        return emails;
     }
 
     public String analysis() {

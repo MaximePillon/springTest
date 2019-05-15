@@ -1,5 +1,6 @@
 package springproject.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Length;
@@ -51,9 +52,11 @@ public class User {
     @NotEmpty(message= "Provide an username please")
     private String username;
 
+    @JsonIgnore
     @Column(name= "bundle")
     private String bundle = "classic";
 
+    @JsonIgnore
     @Transient
     private ABundle bundleObject = ABundle.create(bundle);
 
@@ -69,11 +72,13 @@ public class User {
             bundleObject = ABundle.create(bundle);
     }
 
+    @JsonIgnore
     public String getBundleName() {
         bundleReset();
         return bundleObject.getName();
     }
 
+    @JsonIgnore
     public int imageCounter() {
         bundleReset();
         return images.size();
