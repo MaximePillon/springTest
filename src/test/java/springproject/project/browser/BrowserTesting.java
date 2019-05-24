@@ -6,6 +6,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -16,8 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @EnableAutoConfiguration
@@ -32,6 +32,10 @@ public class BrowserTesting {
     private String frenchGreeting = "Bienvenu sur le project Epicture !";
     private String englishGreeting = "Welcome to Epicture project !";
     private String errorLogin = "Email or Password invalid, please verify";
+    private String errorUsername = "Provide an username please";
+    private String errorFirstname = "Provide your firstname please";
+    private String errorLastname = "Provide your lastname please";
+    private String errorEmail = "Please provide an email";
 
     @Autowired
     private WebDriver driver;
@@ -110,15 +114,74 @@ public class BrowserTesting {
     }
 
     @Test
-    public void checkErrorOnRegisterPage() {
-        WebElement element = driver.findElement(By.id("profile"));
-        element.click();
-        element = driver.findElement(By.id("register"))
+    public void checkUserNameError() {
+        String content = registerErrorGet("errorUsername");
+        assertEquals(errorUsername, content);
+
+        Boolean result = registerFillAndErrorGet("username", "ThisIsAnUsername", "errorUsername");
+        assertTrue(result);
+    }
+
+    @Test
+    public void checkFirstnameError() {
+        String content = registerErrorGet("errorFirstname");
+        assertEquals(errorFirstname, content);
+
+        Boolean result = registerFillAndErrorGet("firstname", "ThisIsAFirstname", "errorFirstname");
+        assertTrue(result);
+    }
+
+    @Test
+    public void checkLastnameError() {
+        String content = registerErrorGet("errorLastname");
+        assertEquals(errorLastname, content);
+
+        Boolean result = registerFillAndErrorGet("lastname", "ThisIsALastname", "errorLastname");
+        assertTrue(result);
+    }
+
+    @Test
+    public void checkEmailError() {
+        String content = registerErrorGet("errorEmail");
+        assertEquals(errorEmail, content);
+
+        Boolean result = registerFillAndErrorGet("email", "this@email.com", "errorEmail");
+        assertTrue(result);
+    }
+
+    private Boolean registerFillAndErrorGet(String to, String what, String errorField) {
+        WebElement element = driver.findElement(By.id(to));
+        element.sendKeys("value", what);
+
+        clickRegister();
+
+        try {
+            driver.findElement(By.id(errorField));
+        } catch (NoSuchElementException e) {
+            return true;
+        }
+        return false;
+    }
+
+    private String registerErrorGet(String errorField) {
+        getRegisterPage();
+        clickRegister();
+
+        WebElement element = driver.findElement(By.id(errorField));
+        return element.getText();
     }
 
 
-    private String getErrorRegiser(String id)
-    {
+    private void getRegisterPage() {
+        WebElement element = driver.findElement(By.id("profile"));
+        element.click();
+        element = driver.findElement(By.id("register"));
+        element.click();
+    }
 
+    private void clickRegister()
+    {
+        WebElement element = driver.findElement(By.id("signup"));
+        element.click();
     }
 }
