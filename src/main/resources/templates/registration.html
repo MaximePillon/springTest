@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Registration Form</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/css/global.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/global.css}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -23,42 +22,43 @@
                 <h2 th:text="#{registration}"></h2>
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+                        <label id="errorUsername" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
                                class="validation-message"></label>
-                        <input type="text" th:field="*{username}" th:placeholder="#{username}" class="form-control" />
+                        <input type="text" id="username" th:field="*{username}" th:placeholder="#{username}"
+                               class="form-control"/>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <label th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                        <label id="errorFirstname" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
                                class="validation-message"></label>
-                        <input type="text" th:field="*{firstName}" th:placeholder="#{firstname}"
-                               class="form-control" />
+                        <input type="text" id="firstname" th:field="*{firstName}" th:placeholder="#{firstname}"
+                               class="form-control"/>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <label	th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
-                                  class="validation-message"></label>
-                        <input type="text" th:field="*{lastName}"
-                               th:placeholder="#{lastname}" class="form-control" />
+                        <label id="errorLastname" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                               class="validation-message"></label>
+                        <input type="text" id="lastname" th:field="*{lastName}"
+                               th:placeholder="#{lastname}" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <input type="text" th:field="*{email}" placeholder="Email"
-                               class="form-control" /> <label
-                            th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
-                            class="validation-message"></label>
+                        <label id="errorEmail" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                               class="validation-message"></label>
+                        <input id="email" type="text" th:field="*{email}" placeholder="Email"
+                               class="form-control"/>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-sm-9">
                         <input type="text" th:field="*{city}" th:placeholder="#{location}"
-                               class="form-control" /> <label
+                               class="form-control"/> <label
                             th:if="${#fields.hasErrors('city')}" th:errors="*{city}"
                             class="validation-message"></label>
                     </div>
@@ -67,7 +67,7 @@
                 <div class="form-group">
                     <div class="col-sm-9">
                         <input type="password" th:field="*{password}"
-                               th:placeholder="#{password}" class="form-control" /> <label
+                               th:placeholder="#{password}" class="form-control"/> <label
                             th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
                             class="validation-message"></label>
                     </div>
@@ -75,7 +75,8 @@
 
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <button type="submit" class="btn btn-primary btn-block" th:text="#{register}"></button>
+                        <button type="submit" id="signup" class="btn btn-primary btn-block"
+                                th:text="#{register}"></button>
                     </div>
                 </div>
 
@@ -86,7 +87,7 @@
             <form th:action="@{/login}" class="form-horizontal" method="GET">
                 <div class="form-group">
                     <div class="col-sm-9">
-                <button class="btn btn-warning btn-block" type="Submit" th:text="#{loginPage}"></button>
+                        <button class="btn btn-warning btn-block" type="Submit" th:text="#{loginPage}"></button>
                     </div>
                 </div>
             </form>

@@ -1,3 +1,6 @@
+screenshots/
+log.txt
+user-images/
 .gradle
 /build/
 !gradle/wrapper/gradle-wrapper.jar

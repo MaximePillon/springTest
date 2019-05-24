@@ -17,7 +17,7 @@
 <nav th:replace="fragments/header :: header"></nav>
 
 <div sec:authorize="isAnonymous()" class="container header-margin text-center">
-    <span class="home-text" th:text="#{greeting}"></span>
+    <span class="home-text" id="greeting" th:text="#{greeting}"></span>
     <br>
     <span class="home-text" th:text="#{pleaseLog}"></span>
 </div>
