@@ -26,13 +26,13 @@
                id="password" name="password" class="form-control" /> <br />
 
         <div align="center" th:if="${param.error}">
-            <p style="font-size: 20px; color: #FF1C19;" th:text="#{loginError}"></p>
+            <p id="error" style="font-size: 20px; color: #FF1C19;" th:text="#{loginError}"></p>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit" th:text="#{logAction}"></button>
+        <button class="btn btn-lg btn-primary btn-block" id="login" name="Submit" value="Login" type="Submit" th:text="#{logAction}"></button>
     </form>
 
     <form th:action="@{/registration}" method="GET" class="form-margin">
-        <button class="btn btn-lg btn-warning btn-block" type="Submit" th:text="#{register}"></button>
+        <button id="register" class="btn btn-lg btn-warning btn-block" type="Submit" th:text="#{register}"></button>
     </form>
 </div>
 

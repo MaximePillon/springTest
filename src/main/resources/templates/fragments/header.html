@@ -16,7 +16,7 @@
                     <a href="#" th:href="@{/}">Home</a>
                 </li>
                 <li th:classappend="active">
-                    <a href="#" th:href="@{/gallery}" th:text="#{gallery}"></a>
+                    <a href="#" id="gallery" th:href="@{/gallery}" th:text="#{gallery}"></a>
                 </li>
                 <li th:classappend="active">
                     <a href="#" th:href="@{/bucket}" th:text="#{shop}"></a>
@@ -24,7 +24,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="/signin" th:href="@{/profile}">
+                    <a id="profile" href="/signin" th:href="@{/profile}">
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                     </a>
                 </li>
@@ -37,10 +37,10 @@
                     </a>
                 </li>
                 <li>
-                    <a th:href="@{''(lang=fr)}">fr</a>
+                    <a id="fr" th:href="@{''(lang=fr)}">fr</a>
                 </li>
                 <li>
-                    <a th:href="@{''(lang=us)}">us</a>
+                    <a id="us" th:href="@{''(lang=us)}">us</a>
                 </li>
 
             </ul>
