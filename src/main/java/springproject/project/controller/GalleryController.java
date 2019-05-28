@@ -109,7 +109,7 @@ public class GalleryController {
     }
 
     @GetMapping(value = "details/{imageId}")
-    public ModelAndView detailsPhoto(@PathVariable(value = "imageId") int id) throws IOException {
+    public ModelAndView detailsPhoto(@PathVariable(value = "imageId") int id) {
         ModelAndView _new = new ModelAndView();
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
