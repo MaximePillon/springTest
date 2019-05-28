@@ -80,7 +80,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/profile")
-    public ModelAndView profile(Model model) {
+    public ModelAndView profile() {
         ModelAndView modelAndView = new ModelAndView();
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

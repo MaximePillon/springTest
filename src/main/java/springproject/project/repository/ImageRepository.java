@@ -15,8 +15,6 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
     Image findById(int id);
 
-    Void deleteById(int id);
-
     ArrayList<Image> findAllByIsPublic(boolean isPublic);
 
     ArrayList<Image> findAllByIsPublicAndDescriptionContaining(boolean isPublic, String filter);

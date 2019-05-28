@@ -1,8 +1,6 @@
 package springproject.project.service;
 
-import marvin.gui.MarvinImagePanel;
 import marvin.image.MarvinImage;
-import marvin.image.MarvinImageMask;
 import marvin.io.MarvinImageIO;
 import marvin.plugin.MarvinImagePlugin;
 import marvin.util.MarvinPluginLoader;
@@ -16,21 +14,21 @@ public class ImageEditor {
                 sepiaAction(path, value);
                 break;
             case "blur":
-                blurAction(path, value);
+                blurAction(path);
                 break;
             case "grayscale":
                 grayscaleAction(path);
                 break;
             case "invert":
-                invertAction(path, value);
+                invertAction(path);
                 break;
             case "pixelize":
-                pixelizeAction(path, value);
+                pixelizeAction(path);
                 break;
         }
     }
 
-    private void invertAction(String path, int value) {
+    private void invertAction(String path) {
         MarvinImage image = MarvinImageIO.loadImage(path);
         MarvinImagePlugin imagePlugin = MarvinPluginLoader.loadImagePlugin("org.marvinproject.image.color.invert.jar");
 
@@ -40,7 +38,7 @@ public class ImageEditor {
         MarvinImageIO.saveImage(image, path);
     }
 
-    private void pixelizeAction(String path, int value) {
+    private void pixelizeAction(String path) {
         MarvinImage image = MarvinImageIO.loadImage(path);
         MarvinImagePlugin imagePlugin = MarvinPluginLoader.loadImagePlugin("org.marvinproject.image.blur.pixelize.jar");
 
@@ -50,7 +48,7 @@ public class ImageEditor {
         MarvinImageIO.saveImage(image, path);
     }
 
-    private void blurAction(String path, int value) {
+    private void blurAction(String path) {
         MarvinImage image = MarvinImageIO.loadImage(path);
         MarvinImagePlugin imagePlugin = MarvinPluginLoader.loadImagePlugin("org.marvinproject.image.blur.gaussianBlur.jar");
 
