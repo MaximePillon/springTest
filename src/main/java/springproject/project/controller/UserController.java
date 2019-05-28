@@ -27,8 +27,8 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping(value="/registration")
-    public ModelAndView registration(){
+    @GetMapping(value = "/registration")
+    public ModelAndView registration() {
         ModelAndView modelAndView = new ModelAndView();
         User user = new User();
         modelAndView.addObject("user", user);
@@ -57,7 +57,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @PostMapping(value= "/update")
+    @PostMapping(value = "/update")
     public ModelAndView updateUser(@Valid User user, BindingResult bindingResult) {
         User userExists = userService.findUserByEmail(user.getEmail());
         ModelAndView modelAndView = new ModelAndView();
@@ -75,7 +75,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping(value="/profile")
+    @GetMapping(value = "/profile")
     public ModelAndView profile(Model model) {
         ModelAndView modelAndView = new ModelAndView();
 

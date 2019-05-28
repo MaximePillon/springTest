@@ -28,22 +28,6 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    /*
-    TODO
-    Error cant find out the problem and btw the solution
-
-    @Autowired
-    private ConnectionFactoryLocator connectionFactoryLocator;
-
-    @Autowired
-    private UsersConnectionRepository usersConnectionRepository;
-
-    @Autowired
-    private FacebookSignUpService facebookSignUpService;
-    */
-
-
-
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -84,21 +68,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/").and().exceptionHandling()
                 .accessDeniedPage("/access-denied");
     }
-
-    /*
-    TODO
-    Same as before
-
-    @Bean
-    public ProviderSignInController providerSignInController() {
-        ((InMemoryUsersConnectionRepository) usersConnectionRepository)
-                .setConnectionSignUp(facebookSignUpService);
-
-        return new ProviderSignInController(
-                connectionFactoryLocator,
-                usersConnectionRepository,
-                new FacebookSignInAdapterService());
-    }*/
 
     @Override
     public void configure(WebSecurity web) throws Exception {

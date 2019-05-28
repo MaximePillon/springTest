@@ -46,7 +46,9 @@ public class UserService {
         return userRepository.findAllByEmailContaining(email);
     }
 
-    public void validate(User user) { userRepository.saveAndFlush(user); }
+    public void validate(User user) {
+        userRepository.saveAndFlush(user);
+    }
 
     public void saveUser(User user) {
         Logger logger = Logger.getInstance();
@@ -79,7 +81,9 @@ public class UserService {
         List<User> users = userRepository.findByBundle(name);
         List<String> emails = new ArrayList<>();
 
-        for (User user : users) { emails.add(user.getEmail()); }
+        for (User user : users) {
+            emails.add(user.getEmail());
+        }
         return emails;
     }
 

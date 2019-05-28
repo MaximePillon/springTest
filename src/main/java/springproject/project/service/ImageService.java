@@ -34,7 +34,7 @@ public class ImageService {
     }
 
     public Image getByUserAndFilename(int id, String name) {
-            return imageRepository.findByUserIdAndFilename(id, name);
+        return imageRepository.findByUserIdAndFilename(id, name);
     }
 
     public Image getById(int id) {
@@ -117,8 +117,7 @@ public class ImageService {
         imageRepository.flush();
     }
 
-    public void updateImage(Image actual, Image newDetails)
-    {
+    public void updateImage(Image actual, Image newDetails) {
         actual.setTitle(newDetails.getTitle());
         actual.setIsPublic(newDetails.isIsPublic());
         actual.setDescription(newDetails.getDescription());

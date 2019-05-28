@@ -15,7 +15,7 @@ public class FrontController {
     @Autowired
     private ImageService imageService;
 
-    @GetMapping(value= {"/", "/home"})
+    @GetMapping(value = {"/", "/home"})
 
     public ModelAndView homePage() {
         ModelAndView _new = new ModelAndView();

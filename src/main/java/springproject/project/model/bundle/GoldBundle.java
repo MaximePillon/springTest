@@ -14,8 +14,6 @@ public class GoldBundle extends ABundle {
         return "gold";
     }
 
-
-
     @Override
     public boolean asFilterAccess(String filter) {
         return filters.contains(filter);

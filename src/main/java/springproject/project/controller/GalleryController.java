@@ -97,14 +97,14 @@ public class GalleryController {
         return new RedirectView("/gallery");
     }
 
-    @GetMapping(value = "download/{imgId}", produces =  MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @GetMapping(value = "download/{imgId}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     @ResponseBody
     public FileSystemResource downloadPhoto(@PathVariable(value = "imgId") int id,
-                                      HttpServletResponse response) {
+                                            HttpServletResponse response) {
         Image img = imageService.getById(id);
-            File initialFile = new File(imageService.getImagePath() + img.getUser().getId() + "/" + img.getFilename());
-            return new FileSystemResource(initialFile);
-        }
+        File initialFile = new File(imageService.getImagePath() + img.getUser().getId() + "/" + img.getFilename());
+        return new FileSystemResource(initialFile);
+    }
 
     @GetMapping(value = "details/{imageId}")
     public ModelAndView detailsPhoto(@PathVariable(value = "imageId") int id) throws IOException {

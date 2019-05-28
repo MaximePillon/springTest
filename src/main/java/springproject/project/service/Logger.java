@@ -14,16 +14,17 @@ public class Logger {
         try {
             FileWriter fw = new FileWriter(logFile);
             writer = new PrintWriter(fw, true);
-        } catch (IOException e) {}
+        } catch (IOException e) {
+        }
     }
 
-    public static synchronized Logger getInstance(){
-        if(logger == null)
+    public static synchronized Logger getInstance() {
+        if (logger == null)
             logger = new Logger();
         return logger;
     }
 
-    public void logCreate (String msg) {
+    public void logCreate(String msg) {
         writer.println("##############");
         writer.println("Creating: " + msg);
         writer.println("##############");

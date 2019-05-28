@@ -18,8 +18,6 @@ public class BucketController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-
     @GetMapping(value = "/bucket")
     public ModelAndView getBucket() {
         ModelAndView _new = new ModelAndView();
@@ -32,7 +30,6 @@ public class BucketController {
     public RedirectView applyBucket(@PathVariable(value = "type") String type) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-
 
         user.setBundle(type);
         userService.validate(user);
