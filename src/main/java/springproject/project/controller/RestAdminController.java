@@ -29,11 +29,16 @@ import javax.validation.Valid;
 @Validated
 public class RestAdminController {
 
-    @Autowired
     private UserService userService;
 
-    @Autowired
     private ImageService imageService;
+
+    @Autowired
+    public RestAdminController(UserService userService,
+                               ImageService imageService) {
+        this.userService = userService;
+        this.imageService = imageService;
+    }
 
     @RequestMapping("/rest/user")
     public Object userInfo(@TokenConstraint @RequestHeader("token") String token,

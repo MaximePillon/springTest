@@ -15,8 +15,12 @@ import springproject.project.service.UserService;
 @Controller
 public class BucketController {
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public BucketController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping(value = "/bucket")
     public ModelAndView getBucket() {

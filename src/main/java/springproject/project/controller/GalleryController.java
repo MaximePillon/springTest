@@ -1,12 +1,10 @@
 package springproject.project.controller;
 
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,22 +19,26 @@ import springproject.project.service.UserService;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 
 @Controller
 public class GalleryController {
 
-    @Autowired
     private ImageService imageService;
 
-    @Autowired
     private UserService userService;
 
-    @Autowired
     private ImageEditor imageEditor;
+
+    @Autowired
+    public GalleryController(ImageService imageService,
+                             UserService userService,
+                             ImageEditor imageEditor) {
+        this.imageEditor = imageEditor;
+        this.imageService = imageService;
+        this.userService = userService;
+    }
 
     @GetMapping(value = "/gallery")
     public ModelAndView getGallery() {
