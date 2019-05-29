@@ -1,7 +1,5 @@
 package springproject.project.model.bundle;
 
-import javax.persistence.DiscriminatorValue;
-
 public class PlatinumBundle extends ABundle {
 
     private int files = 1000000;

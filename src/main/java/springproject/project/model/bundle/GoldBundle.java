@@ -1,6 +1,5 @@
 package springproject.project.model.bundle;
 
-import javax.persistence.DiscriminatorValue;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,8 +12,6 @@ public class GoldBundle extends ABundle {
     public String getName() {
         return "gold";
     }
-
-
 
     @Override
     public boolean asFilterAccess(String filter) {

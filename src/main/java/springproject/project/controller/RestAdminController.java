@@ -4,14 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Base64;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springproject.project.model.Image;
@@ -20,20 +18,20 @@ import springproject.project.service.ImageService;
 import springproject.project.service.UserService;
 import springproject.project.validator.TokenConstraint;
 
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-
 @org.springframework.web.bind.annotation.RestController
 @Validated
 public class RestAdminController {
 
-    @Autowired
     private UserService userService;
 
-    @Autowired
     private ImageService imageService;
+
+    @Autowired
+    public RestAdminController(UserService userService,
+                               ImageService imageService) {
+        this.userService = userService;
+        this.imageService = imageService;
+    }
 
     @RequestMapping("/rest/user")
     public Object userInfo(@TokenConstraint @RequestHeader("token") String token,
@@ -108,7 +106,6 @@ public class RestAdminController {
 
     @RequestMapping(value = "/rest/bundle", produces = "application/json")
     public Object getUserBundle(@RequestParam(value = "name", defaultValue = "") String name) {
-        System.out.println("A request is received with: " + name);
         if (name.isEmpty())
             return null;
 
@@ -120,10 +117,7 @@ public class RestAdminController {
             produces = MediaType.IMAGE_JPEG_VALUE
     )
     public ResponseEntity<byte[]> imageById(@TokenConstraint @RequestHeader("token") String token,
-                                            @RequestParam(value = "id", defaultValue = "0") int id,
-                                            HttpServletResponse response) throws IOException {
-        String path = imageService.getPathById(id);
-
+                                            @RequestParam(value = "id", defaultValue = "0") int id) throws IOException {
         File serverFile = new File(imageService.getPathById(id));
 
         byte[] bytes = Files.readAllBytes(serverFile.toPath());
@@ -131,13 +125,5 @@ public class RestAdminController {
                 .ok()
                 .contentType(MediaType.IMAGE_JPEG)
                 .body(bytes);
-    }
-
-
-    public ResponseEntity<String> key(HttpServletRequest request) {
-        if (request.getHeader("authorization") != "toto") {
-            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<String>(HttpStatus.OK);
     }
 }

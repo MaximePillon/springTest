@@ -13,7 +13,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "image")
-@EqualsAndHashCode(exclude="user")
+@EqualsAndHashCode(exclude = "user")
 public class Image {
 
     @Id
@@ -44,7 +44,7 @@ public class Image {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     public boolean isIsPublic() {

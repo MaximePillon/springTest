@@ -2,7 +2,6 @@ package springproject.project;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,37 +11,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import springproject.project.service.FacebookSignUpService;
-import springproject.project.service.FacebookSignInAdapterService;
-
-import org.springframework.social.connect.ConnectionFactoryLocator;
-import org.springframework.social.connect.UsersConnectionRepository;
-import org.springframework.social.connect.mem.InMemoryUsersConnectionRepository;
-import org.springframework.social.connect.web.ProviderSignInController;
-
-
 import javax.sql.DataSource;
 
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-    /*
-    TODO
-    Error cant find out the problem and btw the solution
-
-    @Autowired
-    private ConnectionFactoryLocator connectionFactoryLocator;
-
-    @Autowired
-    private UsersConnectionRepository usersConnectionRepository;
-
-    @Autowired
-    private FacebookSignUpService facebookSignUpService;
-    */
-
-
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -84,21 +58,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/").and().exceptionHandling()
                 .accessDeniedPage("/access-denied");
     }
-
-    /*
-    TODO
-    Same as before
-
-    @Bean
-    public ProviderSignInController providerSignInController() {
-        ((InMemoryUsersConnectionRepository) usersConnectionRepository)
-                .setConnectionSignUp(facebookSignUpService);
-
-        return new ProviderSignInController(
-                connectionFactoryLocator,
-                usersConnectionRepository,
-                new FacebookSignInAdapterService());
-    }*/
 
     @Override
     public void configure(WebSecurity web) throws Exception {

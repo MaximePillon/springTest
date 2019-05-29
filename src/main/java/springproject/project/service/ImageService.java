@@ -1,6 +1,5 @@
 package springproject.project.service;
 
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,18 +23,12 @@ public class ImageService {
     private static String IMAGE_PATH = "user-images/";
 
     private ImageRepository imageRepository;
-    private ResourceLoader resourceLoader;
 
     @Autowired
-    public ImageService(ImageRepository imageRepository,
-                        ResourceLoader resourceLoader) {
+    public ImageService(ImageRepository imageRepository) {
         this.imageRepository = imageRepository;
-        this.resourceLoader = resourceLoader;
     }
 
-    public Image getByUserAndFilename(int id, String name) {
-            return imageRepository.findByUserIdAndFilename(id, name);
-    }
 
     public Image getById(int id) {
         return imageRepository.findById(id);
@@ -85,7 +78,6 @@ public class ImageService {
         destFile.getParentFile().mkdirs();
         destFile.createNewFile();
 
-        Path destPath = destFile.toPath();
         FileCopyUtils.copy(file, destFile);
         image.setFilename(filename);
         imageRepository.save(image);
@@ -111,14 +103,12 @@ public class ImageService {
     }
 
     public void removeImageById(int id) {
-        System.out.println("in delete method");
         Image image = imageRepository.findById(id);
         imageRepository.delete(image);
         imageRepository.flush();
     }
 
-    public void updateImage(Image actual, Image newDetails)
-    {
+    public void updateImage(Image actual, Image newDetails) {
         actual.setTitle(newDetails.getTitle());
         actual.setIsPublic(newDetails.isIsPublic());
         actual.setDescription(newDetails.getDescription());

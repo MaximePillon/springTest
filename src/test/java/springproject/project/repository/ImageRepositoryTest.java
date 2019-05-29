@@ -23,9 +23,6 @@ public class ImageRepositoryTest {
     private TestEntityManager entityManager;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private ImageRepository imageRepository;
 
     @Before

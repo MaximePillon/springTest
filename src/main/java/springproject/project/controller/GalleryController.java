@@ -1,12 +1,10 @@
 package springproject.project.controller;
 
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,29 +19,32 @@ import springproject.project.service.UserService;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 
 @Controller
 public class GalleryController {
 
-    @Autowired
     private ImageService imageService;
 
-    @Autowired
     private UserService userService;
 
-    @Autowired
     private ImageEditor imageEditor;
+
+    @Autowired
+    public GalleryController(ImageService imageService,
+                             UserService userService,
+                             ImageEditor imageEditor) {
+        this.imageEditor = imageEditor;
+        this.imageService = imageService;
+        this.userService = userService;
+    }
 
     @GetMapping(value = "/gallery")
     public ModelAndView getGallery() {
         ModelAndView _new = new ModelAndView();
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
+        User user = userService.getLoggedUser();
 
         Image image = new Image();
         _new.addObject("image", image);
@@ -56,8 +57,7 @@ public class GalleryController {
     @PostMapping(value = "/upload")
     public RedirectView addPhoto(@Valid Image image,
                                  @RequestParam("file") MultipartFile file) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
+        User user = userService.getLoggedUser();
 
         if (user.imageCounter() >= user.getBundleObject().numberOfFile())
             return new RedirectView("gallery");
@@ -83,8 +83,7 @@ public class GalleryController {
 
     @GetMapping(value = "delete/{imgId}")
     public RedirectView deletePhoto(@PathVariable(value = "imgId") int id) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
+        User user = userService.getLoggedUser();
         Image image = imageService.getById(id);
 
         userService.deleteImage(user, image);
@@ -97,21 +96,20 @@ public class GalleryController {
         return new RedirectView("/gallery");
     }
 
-    @GetMapping(value = "download/{imgId}", produces =  MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @GetMapping(value = "download/{imgId}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     @ResponseBody
     public FileSystemResource downloadPhoto(@PathVariable(value = "imgId") int id,
-                                      HttpServletResponse response) {
+                                            HttpServletResponse response) {
         Image img = imageService.getById(id);
-            File initialFile = new File(imageService.getImagePath() + img.getUser().getId() + "/" + img.getFilename());
-            return new FileSystemResource(initialFile);
-        }
+        File initialFile = new File(imageService.getImagePath() + img.getUser().getId() + "/" + img.getFilename());
+        return new FileSystemResource(initialFile);
+    }
 
     @GetMapping(value = "details/{imageId}")
-    public ModelAndView detailsPhoto(@PathVariable(value = "imageId") int id) throws IOException {
+    public ModelAndView detailsPhoto(@PathVariable(value = "imageId") int id) {
         ModelAndView _new = new ModelAndView();
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
+        User user = userService.getLoggedUser();
         Image image = imageService.getById(id);
 
         _new.addObject("image", image);

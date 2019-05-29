@@ -1,6 +1,5 @@
 package springproject.project.model.bundle;
 
-import javax.persistence.DiscriminatorValue;
 import java.util.Arrays;
 import java.util.List;
 

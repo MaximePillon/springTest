@@ -2,14 +2,11 @@ package springproject.project.controller;
 
 import javax.validation.Valid;
 
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import springproject.project.model.User;
 import springproject.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,8 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class UserController {
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping(value = "/login")
     public ModelAndView login() {
@@ -27,8 +28,8 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping(value="/registration")
-    public ModelAndView registration(){
+    @GetMapping(value = "/registration")
+    public ModelAndView registration() {
         ModelAndView modelAndView = new ModelAndView();
         User user = new User();
         modelAndView.addObject("user", user);
@@ -57,7 +58,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @PostMapping(value= "/update")
+    @PostMapping(value = "/update")
     public ModelAndView updateUser(@Valid User user, BindingResult bindingResult) {
         User userExists = userService.findUserByEmail(user.getEmail());
         ModelAndView modelAndView = new ModelAndView();
@@ -75,12 +76,11 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping(value="/profile")
-    public ModelAndView profile(Model model) {
+    @GetMapping(value = "/profile")
+    public ModelAndView profile() {
         ModelAndView modelAndView = new ModelAndView();
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
+        User user = userService.getLoggedUser();
 
         modelAndView.addObject("user", user);
         modelAndView.setViewName("user/profile");

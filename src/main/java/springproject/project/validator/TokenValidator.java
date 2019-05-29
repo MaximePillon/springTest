@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidatorContext;
 public class TokenValidator implements
         ConstraintValidator<TokenConstraint, String> {
 
-    String auth = "this-is-token";
+    private String auth = "this-is-token";
 
     @Override
     public void initialize(TokenConstraint token) {

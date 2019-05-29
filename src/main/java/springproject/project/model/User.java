@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Length;
-import springproject.project.model.bundle.ClassicBundle;
 import springproject.project.model.bundle.ABundle;
 
 import javax.persistence.*;
@@ -15,7 +14,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "\"user\"")
-@EqualsAndHashCode(exclude="images")
+@EqualsAndHashCode(exclude = "images")
 public class User {
 
     @Id
@@ -44,16 +43,16 @@ public class User {
     @Column(name = "active")
     private int active;
 
-    @Column(name="city")
-    @NotEmpty(message= "Provide your city please")
+    @Column(name = "city")
+    @NotEmpty(message = "Provide your city please")
     private String city;
 
-    @Column(name= "username")
-    @NotEmpty(message= "Provide an username please")
+    @Column(name = "username")
+    @NotEmpty(message = "Provide an username please")
     private String username;
 
     @JsonIgnore
-    @Column(name= "bundle")
+    @Column(name = "bundle")
     private String bundle = "classic";
 
     @JsonIgnore
@@ -64,7 +63,7 @@ public class User {
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Image> images;
 
     private void bundleReset() {

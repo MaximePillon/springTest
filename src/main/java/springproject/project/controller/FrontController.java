@@ -12,11 +12,14 @@ import java.util.ArrayList;
 @Controller
 public class FrontController {
 
-    @Autowired
     private ImageService imageService;
 
-    @GetMapping(value= {"/", "/home"})
+    @Autowired
+    public FrontController(ImageService imageService) {
+        this.imageService = imageService;
+    }
 
+    @GetMapping(value = {"/", "/home"})
     public ModelAndView homePage() {
         ModelAndView _new = new ModelAndView();
 
