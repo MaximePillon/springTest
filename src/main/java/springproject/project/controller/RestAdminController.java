@@ -106,7 +106,6 @@ public class RestAdminController {
 
     @RequestMapping(value = "/rest/bundle", produces = "application/json")
     public Object getUserBundle(@RequestParam(value = "name", defaultValue = "") String name) {
-        System.out.println("A request is received with: " + name);
         if (name.isEmpty())
             return null;
 

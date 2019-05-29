@@ -1,8 +1,6 @@
 package springproject.project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,8 +29,7 @@ public class BucketController {
 
     @GetMapping(value = "/bucket/{type}")
     public RedirectView applyBucket(@PathVariable(value = "type") String type) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
+        User user = userService.getLoggedUser();
 
         user.setBundle(type);
         userService.validate(user);

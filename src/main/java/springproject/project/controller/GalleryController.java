@@ -44,8 +44,7 @@ public class GalleryController {
     public ModelAndView getGallery() {
         ModelAndView _new = new ModelAndView();
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
+        User user = userService.getLoggedUser();
 
         Image image = new Image();
         _new.addObject("image", image);
@@ -58,8 +57,7 @@ public class GalleryController {
     @PostMapping(value = "/upload")
     public RedirectView addPhoto(@Valid Image image,
                                  @RequestParam("file") MultipartFile file) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
+        User user = userService.getLoggedUser();
 
         if (user.imageCounter() >= user.getBundleObject().numberOfFile())
             return new RedirectView("gallery");
@@ -85,8 +83,7 @@ public class GalleryController {
 
     @GetMapping(value = "delete/{imgId}")
     public RedirectView deletePhoto(@PathVariable(value = "imgId") int id) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
+        User user = userService.getLoggedUser();
         Image image = imageService.getById(id);
 
         userService.deleteImage(user, image);
@@ -112,8 +109,7 @@ public class GalleryController {
     public ModelAndView detailsPhoto(@PathVariable(value = "imageId") int id) {
         ModelAndView _new = new ModelAndView();
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
+        User user = userService.getLoggedUser();
         Image image = imageService.getById(id);
 
         _new.addObject("image", image);

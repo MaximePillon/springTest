@@ -1,5 +1,7 @@
 package springproject.project.service;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import springproject.project.model.Image;
 import springproject.project.model.Role;
 import springproject.project.model.User;
@@ -48,6 +50,11 @@ public class UserService {
 
     public void validate(User user) {
         userRepository.saveAndFlush(user);
+    }
+
+    public User getLoggedUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return this.findUserByEmail(auth.getName());
     }
 
     public void saveUser(User user) {

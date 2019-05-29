@@ -103,7 +103,6 @@ public class ImageService {
     }
 
     public void removeImageById(int id) {
-        System.out.println("in delete method");
         Image image = imageRepository.findById(id);
         imageRepository.delete(image);
         imageRepository.flush();
