@@ -9,71 +9,34 @@ import org.springframework.stereotype.Service;
 @Service("imageEditor")
 public class ImageEditor {
     public void apply(String path, String filter, int value) {
+        MarvinImage image = MarvinImageIO.loadImage(path);
+        MarvinImagePlugin imagePlugin;
+
         switch (filter) {
             case "sepia":
-                sepiaAction(path, value);
+                imagePlugin = MarvinPluginLoader.loadImagePlugin("org.marvinproject.image.color.sepia.jar");
+                imagePlugin.setAttribute("hsIntensidade", value);
                 break;
             case "blur":
-                blurAction(path);
+                imagePlugin = MarvinPluginLoader.loadImagePlugin("org.marvinproject.image.blur.gaussianBlur.jar");
                 break;
             case "grayscale":
-                grayscaleAction(path);
+                imagePlugin = MarvinPluginLoader.loadImagePlugin("org.marvinproject.image.color.grayScale.jar");
                 break;
             case "invert":
-                invertAction(path);
+                imagePlugin = MarvinPluginLoader.loadImagePlugin("org.marvinproject.image.color.invert.jar");
                 break;
             case "pixelize":
-                pixelizeAction(path);
+                imagePlugin = MarvinPluginLoader.loadImagePlugin("org.marvinproject.image.blur.pixelize.jar");
                 break;
+            default:
+                return;
         }
+        this.applyPlugin(path, image, imagePlugin);
     }
 
-    private void invertAction(String path) {
-        MarvinImage image = MarvinImageIO.loadImage(path);
-        MarvinImagePlugin imagePlugin = MarvinPluginLoader.loadImagePlugin("org.marvinproject.image.color.invert.jar");
-
-        imagePlugin.process(image, image);
-        image.update();
-
-        MarvinImageIO.saveImage(image, path);
-    }
-
-    private void pixelizeAction(String path) {
-        MarvinImage image = MarvinImageIO.loadImage(path);
-        MarvinImagePlugin imagePlugin = MarvinPluginLoader.loadImagePlugin("org.marvinproject.image.blur.pixelize.jar");
-
-        imagePlugin.process(image, image);
-        image.update();
-
-        MarvinImageIO.saveImage(image, path);
-    }
-
-    private void blurAction(String path) {
-        MarvinImage image = MarvinImageIO.loadImage(path);
-        MarvinImagePlugin imagePlugin = MarvinPluginLoader.loadImagePlugin("org.marvinproject.image.blur.gaussianBlur.jar");
-
-        imagePlugin.process(image, image);
-        image.update();
-
-        MarvinImageIO.saveImage(image, path);
-    }
-
-    private void grayscaleAction(String path) {
-        MarvinImage image = MarvinImageIO.loadImage(path);
-        MarvinImagePlugin imagePlugin = MarvinPluginLoader.loadImagePlugin("org.marvinproject.image.color.grayScale.jar");
-
-        imagePlugin.process(image, image);
-        image.update();
-
-        MarvinImageIO.saveImage(image, path);
-    }
-
-    private void sepiaAction(String path, int value) {
-        MarvinImage image = MarvinImageIO.loadImage(path);
-        MarvinImagePlugin imagePlugin = MarvinPluginLoader.loadImagePlugin("org.marvinproject.image.color.sepia.jar");
-
-        imagePlugin.setAttribute("hsIntensidade", value);
-        imagePlugin.process(image, image);
+    private void applyPlugin(String path, MarvinImage image, MarvinImagePlugin plugin) {
+        plugin.process(image, image);
         image.update();
 
         MarvinImageIO.saveImage(image, path);
